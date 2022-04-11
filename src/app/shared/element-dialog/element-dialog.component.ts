@@ -9,6 +9,7 @@ import { PeriodicElement } from 'src/app/views/home/home.component';
 })
 export class ElementDialogComponent implements OnInit {
   element!: PeriodicElement;
+  action!: string;
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
