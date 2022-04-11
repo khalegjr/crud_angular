@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
 import { ElementDialogComponent } from 'src/app/shared/element-dialog/element-dialog.component';
 
@@ -43,19 +43,31 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  openDialog(element: PeriodicElement | null): void {
-    const dialogRef = this.dialog.open(ElementDialogComponent, {
-      width: '250px',
-      data:
-        element === null
-          ? {
-              position: null,
-              name: null,
-              weight: null,
-              symbol: null,
-            }
-          : element,
-    });
+  openDialog(element: PeriodicElement | null, action: string): void {
+    if (element === null && action === 'create') {
+      const dialogRef = this.dialog.open(ElementDialogComponent, {
+        width: '250px',
+        data: this.clearForm(),
+      });
+      dialogRef.componentInstance.action = action;
+
+      this.createElement(dialogRef);
+    } else {
+      const dialogRef = this.dialog.open(ElementDialogComponent, {
+        width: '250px',
+        // data: element,
+        data: {
+          position: element?.position,
+          name: element?.name,
+          weight: element?.weight,
+          symbol: element?.symbol,
+        },
+      });
+      dialogRef.componentInstance.action = action;
+
+      this.editElement(dialogRef);
+    }
+  }
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result !== undefined) {
