@@ -88,6 +88,20 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  // TODO: fix the edit of position
+  editElement(dialogRef: MatDialogRef<ElementDialogComponent>): void {
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result !== undefined) {
+        const index = this.dataSource.findIndex(
+          (item) => item.position === result.position
+        );
+
+        this.dataSource[index] = result;
+        this.table.renderRows();
+      }
+    });
+  }
+
   deleteElement(position: number): void {
     this.dataSource = this.dataSource.filter((p) => p.position !== position);
   }
