@@ -65,4 +65,8 @@ export class HomeComponent implements OnInit {
       console.log('The dialog was closed');
     });
   }
+
+  deleteElement(position: number): void {
+    this.dataSource = this.dataSource.filter((p) => p.position !== position);
+  }
 }
