@@ -69,6 +69,16 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  clearForm() {
+    return {
+      position: null,
+      name: null,
+      weight: null,
+      symbol: null,
+    };
+  }
+
+  createElement(dialogRef: MatDialogRef<ElementDialogComponent | null>): void {
     dialogRef.afterClosed().subscribe((result) => {
       if (result !== undefined) {
         this.dataSource.push(result);
