@@ -103,6 +103,12 @@ export class HomeComponent implements OnInit {
   }
 
   deleteElement(position: number): void {
-    this.dataSource = this.dataSource.filter((p) => p.position !== position);
+    const index: number = this.dataSource.findIndex(
+      (item) => item.position === position
+    );
+    if (index > -1) {
+      this.dataSource.splice(index, 1);
+      this.table.renderRows();
+    }
   }
 }
